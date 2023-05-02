@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         mBinding.getNumberBtn.setOnClickListener {
-            updateNumber()
+            updateNumberOnUI((mService?.getNumber()?:0))
         }
     }
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun updateNumber() {
-            mBinding.number.text = (mService?.getNumber()?:0).toString()
+    private fun updateNumberOnUI(number:Int) {
+            mBinding.number.text = number.toString()
     }
 }

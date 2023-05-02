@@ -32,6 +32,12 @@ class AppService : Service() {
         return binder
     }
 
+
+    /**
+    * @see onStartCommand works on main thread by default.
+     * It does not spawn a new worker thread.
+     *
+    * */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand Called")
         mServiceScope.launch {
