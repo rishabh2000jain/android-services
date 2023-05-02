@@ -12,8 +12,7 @@ import kotlinx.coroutines.*
 import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : AppCompatActivity() {
-    private val job = SupervisorJob()
-    private val activityScope = CoroutineScope(job + Dispatchers.Main)
+
     lateinit var binding: ActivityMainBinding
     var mService: AppService? = null
     private var serviceConnection:ServiceConnection?=null
@@ -56,7 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
     }
 
     private fun updateNumber() {
