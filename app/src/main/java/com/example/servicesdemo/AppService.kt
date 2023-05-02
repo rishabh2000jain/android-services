@@ -9,9 +9,9 @@ import kotlinx.coroutines.*
 import kotlin.time.Duration.Companion.milliseconds
 
 class AppService : Service() {
-    private val job = SupervisorJob()
-    private val serviceScope = CoroutineScope(job + Dispatchers.IO)
-    private var number = 0
+    private val mServiceJob = SupervisorJob()
+    private val mServiceScope = CoroutineScope(mServiceJob + Dispatchers.IO)
+    private var mGeneratedNumber = 0
     inner class MyBinder : Binder() {
         fun getService(): AppService {
             return this@AppService
@@ -19,7 +19,7 @@ class AppService : Service() {
     }
 
     fun getNumber():Int{
-        return number
+        return mGeneratedNumber
     }
 
     private val binder = MyBinder()
@@ -34,7 +34,7 @@ class AppService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand Called")
-        serviceScope.launch {
+        mServiceScope.launch {
             startNumberGenerator()
             stopSelf()
         }
@@ -43,7 +43,7 @@ class AppService : Service() {
 
     private suspend fun startNumberGenerator() {
         for (i in 1..200) {
-            number = i
+            mGeneratedNumber = i
             delay(1000.milliseconds)
             Log.d(TAG, "Number Generated $i")
         }
@@ -52,7 +52,7 @@ class AppService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
+        mServiceJob.cancel()
         Log.d(TAG, "onDestroy Called")
     }
 

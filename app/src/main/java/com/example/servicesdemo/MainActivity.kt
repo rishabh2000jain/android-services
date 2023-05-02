@@ -8,29 +8,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
 import com.example.servicesdemo.databinding.ActivityMainBinding
-import kotlinx.coroutines.*
-import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    lateinit var mBinding: ActivityMainBinding
     var mService: AppService? = null
-    private var serviceConnection:ServiceConnection?=null
-    private var serviceBound:Boolean = false
+    private var mServiceConnection:ServiceConnection?=null
+    private var mServiceBound:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         val serviceIntent = Intent(applicationContext, AppService::class.java)
-        binding.startBtn.setOnClickListener {
+        mBinding.startBtn.setOnClickListener {
             startService(serviceIntent)
         }
-        binding.stopBtn.setOnClickListener {
+        mBinding.stopBtn.setOnClickListener {
             stopService(serviceIntent)
         }
-        binding.bindService.setOnClickListener {
-                 serviceConnection = object : ServiceConnection {
+        mBinding.bindService.setOnClickListener {
+                 mServiceConnection = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                     mService = (service as AppService.MyBinder).getService()
                 }
@@ -39,16 +37,16 @@ class MainActivity : AppCompatActivity() {
                     mService = null
                 }
             }
-            serviceBound = true
-            bindService(serviceIntent,serviceConnection!!,Service.BIND_AUTO_CREATE)
+            mServiceBound = true
+            bindService(serviceIntent,mServiceConnection!!,Service.BIND_AUTO_CREATE)
         }
-        binding.unbindService.setOnClickListener {
-            if(serviceConnection!=null&&serviceBound) {
-                unbindService(serviceConnection!!,)
-                serviceBound = false
+        mBinding.unbindService.setOnClickListener {
+            if(mServiceConnection!=null&&mServiceBound) {
+                unbindService(mServiceConnection!!,)
+                mServiceBound = false
             }
         }
-        binding.getNumberBtn.setOnClickListener {
+        mBinding.getNumberBtn.setOnClickListener {
             updateNumber()
         }
     }
@@ -58,6 +56,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateNumber() {
-            binding.number.text = (mService?.getNumber()?:0).toString()
+            mBinding.number.text = (mService?.getNumber()?:0).toString()
     }
 }
