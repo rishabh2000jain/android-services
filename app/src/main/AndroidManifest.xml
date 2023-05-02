@@ -20,7 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".AppService"/>
+        <service android:name=".AppService" />
+        <!--        merge node is for merge manifest-->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="location|dataSync"
+            tools:ignore="Instantiatable"
+            tools:node="merge" />
     </application>
 
 </manifest>

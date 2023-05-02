@@ -48,5 +48,17 @@
         android:layout_height="70dp"
         android:text="Get Number"
         app:toggleCheckedStateOnClick="true" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startWork"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Start Work"
+        app:toggleCheckedStateOnClick="true" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/stopWork"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Stop Work"
+        app:toggleCheckedStateOnClick="true" />
 
 </LinearLayout>
